@@ -1,0 +1,28 @@
+DEFINE
+MEASURE f2[m1_sum] = sum(f2[m1])
+MEASURE f2[m1_count] = countx(f2, f2[m1])
+MEASURE f2[m1_ytd] = CALCULATE ( f2[m1_sum], DATESYTD ( time_date[time_date] ) ) 
+MEASURE f2[m1_ytd1] = TOTALYTD([m1_sum], time_date[time_date])
+MEASURE f2[m1_ytd2]  = CALCULATE ( [m1_sum], VAR LastDateAvailable = MAX ( time_date[time_date] ) VAR FirstJanuaryOfLastDate = DATE ( YEAR ( LastDateAvailable ), 1, 1 ) RETURN FILTER ( ALL ( time_date[time_date] ), AND ( time_date[time_date] >= FirstJanuaryOfLastDate, time_date[time_date] <= LastDateAvailable ) ) )
+MEASURE f2[m1_qtd]  = CALCULATE([m1_sum],DATESQTD(time_date[time_date]))
+MEASURE f2[m1_mtd]  = CALCULATE([m1_sum],DATESMTD(time_date[time_date]))
+
+EVALUATE
+SUMMARIZECOLUMNS(
+  time_date[time_cy_id]
+, time_date[time_cqtr_id]
+, time_date[time_cmon_id]
+--, time_date[time_date_id]
+, time_date[time_date]
+, "m1_sum", f2[m1_sum]
+, "m1_count", f2[m1_count]
+, "m1_ytd" , f2[m1_ytd]
+, "m1_ytd1" , f2[m1_ytd1]
+, "m1_ytd2" , f2[m1_ytd2]
+, "m1_qtd" , f2[m1_qtd]
+, "m1_mtd" , f2[m1_mtd]
+)
+order by 
+ time_date[time_date]
+
+
