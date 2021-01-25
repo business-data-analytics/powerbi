@@ -3,7 +3,7 @@
 ## [Amount Total]
 
 * For balance account, it would aggregate semi-additively and for flow account, it would aggregate normally.
-* At account group level, it would rollup the account's amount as per the above mentioned equation.
+* At account group level, it would rollup the account's amount as per the "Data Details" section below.
 
 # File datails
 
